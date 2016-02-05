@@ -1,0 +1,6 @@
+build
+.idea
+.DS_Store
+bundle
+node_modules/
+tmp
