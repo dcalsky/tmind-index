@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var path = require('path');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 var autoprefixer = require('autoprefixer');
-var precss       = require('precss');
 var poststylus   = require('poststylus');
 
 module.exports = {
@@ -11,7 +10,7 @@ module.exports = {
     hot: true,
     inline: true,
     progress: true,
-    contentBase: './src/static',
+    contentBase: './src/static/index.html',
     port: 8080
   },
   entry: [
