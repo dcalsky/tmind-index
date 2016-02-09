@@ -1,0 +1,485 @@
+@charset "utf-8";
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica", "Arial", "微软雅黑", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 62.5%;
+    text-align: center;
+    color: #555;
+    color: rgba(0,0,0,0.75);
+    overflow-y: scroll;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+
+*::-moz-selection {
+    background-color: rgba(0,0,0,0.5);
+    color: rgba(255,255,255,1);
+}
+
+*::selection {
+    background-color: rgba(0,0,0,0.5);
+    color: rgba(255,255,255,1);
+}
+
+
+strong {
+    color: #000;
+}
+
+a {
+    color: #332316;
+    color: rgba(0,0,0,0.8);
+}
+
+a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+a[target="_blank"]:before {
+    margin-right: 2px;
+    padding-right: 12px;
+
+    opacity: 0.6;
+    -webkit-transition: opacity 0.25s ease;
+    -moz-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
+}
+
+a[target="_blank"]:before:hover {
+    opacity: 1;
+}
+
+a[rel="leanModal"] {
+    cursor: zoom-in;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+
+/* ============================================================================================== */
+/* contents                                                                                       */
+/* ============================================================================================== */
+
+#wrapper {
+    min-width: 980px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+#contents-wrapper {
+    width: 50%;
+    min-width: 490px;
+    margin: 0;
+    float: left;
+    z-index: 10;
+    background: #fff;
+    -webkit-transition: width 0.75s cubic-bezier(0.8, 0.0, 0.2, 1.0);
+    -moz-transition: width 0.75s cubic-bezier(0.8, 0.0, 0.2, 1.0);
+    transition: width 0.75s cubic-bezier(0.8, 0.0, 0.2, 1.0);
+}
+
+#pjax-container {
+    -webkit-transition: opacity 0.2s ease;
+    -moz-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease;
+}
+
+#contents {
+    width: 450px;
+    margin: 0 auto;
+    padding-top: 240px;
+    text-align: left;
+    text-justify: distribute;
+    font-size: 1.2em;
+    line-height: 2.0em;
+    position: relative;
+    zoom: 1;
+}
+
+#contents h1,
+#contents h2,
+#contents h3,
+#contents h4,
+#contents h5,
+#contents h6,
+#contents strong {
+    color: #000;
+}
+
+#contents #pagetitle {
+    margin-bottom: 180px;
+}
+
+#contents #pagetitle img {
+    width: 30px;
+}
+
+#contents > h1 {
+    display: block;
+    text-align: center;
+    margin-bottom: 180px;
+}
+
+#contents:before,
+#contents:after {content: ""; display: table;}
+#contents:after {clear: both;}
+
+#contents #tabs-list {
+    margin: 0;
+    border-top: 1px solid #e5e5e5;
+}
+
+#contents #tabs-list li {
+    display: inline-block;
+    width: 64px;
+    margin: 0;
+    line-height: 1em;
+}
+
+#contents #tabs-list li a {
+    display: block;
+    padding: 15px 0 12px;
+    border-bottom: 3px solid #ccc;
+    outline: 0;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+#contents #tabs-list li a:hover {
+    color: #000;
+    border-bottom: 3px solid #000;
+}
+
+#contents #tabs-list li.ui-tabs-active a {
+    color: #000;
+    background-color: #eee;
+    background-color: rgba(0,0,0,0.1);
+}
+
+
+/* ============================================================================================== */
+/* images                                                                                         */
+/* ============================================================================================== */
+
+#images {
+    width: 50%;
+    min-width: 490px;
+    margin: 0;
+    height: auto;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+    background: #000;
+    -webkit-transition: left 0.75s cubic-bezier(0.8, 0.0, 0.2, 1.0);
+    -moz-transition: left 0.75s cubic-bezier(0.8, 0.0, 0.2, 1.0);
+    transition: left 0.75s cubic-bezier(0.8, 0.0, 0.2, 1.0);
+}
+
+.multi-touch-device #images {
+    /*background: #000;
+    overflow: scroll;
+    position: absolute;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+            overflow-scrolling: touch;*/
+}
+
+#images ul {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    min-width: 300px;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+#images ul li {
+    width: 100%;
+}
+
+#images ul img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.75;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+#images:hover ul img {
+    opacity: 1;
+}
+#images #catch {
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 265px;
+    left: 0;
+    text-align: center;
+    z-index: 9000;
+    opacity: 1;
+    -webkit-transition: opacity 2s ease;
+    -moz-transition: opacity 2s ease;
+    transition: opacity 2s ease;
+}
+
+
+
+
+
+/* ============================================================================================== */
+/* global-footer                                                                                  */
+/* ============================================================================================== */
+
+#global-footer {
+    text-align: center;
+    width: 100%;
+    margin: 100px auto 0;
+    padding: 100px 0;
+    clear: both;
+    font-size: 11px;
+    color: #777;
+    background-color: #111;
+    -webkit-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
+}
+
+#global-footer address a,
+#global-footer nav li a {
+    text-decoration: none;
+    color: #888;
+    -webkit-transition: color 0.25s ease;
+    transition: color 0.25s ease;
+}
+
+#global-footer address a:hover,
+#global-footer nav li a:hover {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+#global-footer address {
+    margin-bottom: 30px;
+    font-size: 1em;
+    line-height: 1.7em;
+    color: #777;
+}
+
+#global-footer nav {
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+#global-footer nav li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+
+
+#global-footer nav li a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+
+
+/* ---------------------------------- */
+
+
+#global-footer #banner-area a {
+    opacity: 0.3;
+    -webkit-mix-blend-mode: luminosity;
+    mix-blend-mode: luminosity;
+    -webkit-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
+}
+
+#global-footer #banner-area a:hover {
+    opacity: 1;
+    -webkit-mix-blend-mode: normal;
+    mix-blend-mode: normal;
+}
+
+#global-footer #banner-area {
+    margin: 20px auto;
+}
+
+#global-footer #banner-visit-kumamoto img {
+    width: 60px;
+    /*width: 150px;*/
+}
+
+/* ---------------------------------- */
+
+#credit {
+    margin: 0 10px;
+}
+
+#credit small {
+    display: block;
+    margin: 0;
+}
+
+
+
+/* ============================================================================================== */
+/* indicator                                                                                      */
+/* ============================================================================================== */
+
+.indicator {
+    /*visibility: hidden;*/
+    position: fixed;
+    top: -100px;
+    left: 0;
+    line-height: 0;
+    opacity: 0;
+    z-index: 9000;
+    -webkit-transition: opacity 0.25s ease;
+    -moz-transition: opacity 0.25s ease;
+    -ms-transition: opacity 0.25s ease;
+    -o-transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease;
+}
+
+.indicator img {
+    position: absolute;
+    top: 0%;
+    vertical-align: middle;
+}
+
+.indicator span {
+    width: 21px;
+    height: 20px;
+    display: block;
+    margin: 0 auto;
+    z-index: 9999;
+    background: url(/common/images/indicator_k.png) no-repeat left top;
+    -webkit-animation: indicatorAnimation 1.0s steps(12) infinite;
+    animation: indicatorAnimation 1.0s steps(12) infinite;
+}
+
+@-webkit-keyframes indicatorAnimation {
+    from { background-position: 0px 0px; }
+    to   { background-position: 0px -240px; }
+}
+
+@keyframes indicatorAnimation {
+    from { background-position: 0px 0px; }
+    to   { background-position: 0px -240px; }
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (-webkit-min-device-pixel-ratio: 3) {
+    .indicator span {
+        width: 11px;
+        height: 10px;
+        background-size: auto 120px !important;
+        -webkit-animation: indicatorAnimation2 0.5s steps(12) infinite;
+        animation: indicatorAnimation2 0.5s steps(12) infinite;
+    }
+
+    @-webkit-keyframes indicatorAnimation2 {
+        from { background-position: 0px 0px; }
+        to   { background-position: 0px -120px; }
+    }
+
+    @keyframes indicatorAnimation2 {
+        from { background-position: 0px 0px; }
+        to   { background-position: 0px -120px; }
+    }
+}
+
+
+
+/* ============================================================================================== */
+/* UI element                                                                                     */
+/* ============================================================================================== */
+
+a.button {
+    display: block;
+    color: #fff;
+    margin: 20px 0 10px;
+    padding: 20px 0;
+    line-height: 1em;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    background: none;
+    background-color: #999;
+    font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, "Hiragino Mincho ProN", "ヒラギノ明朝 ProN W3", "Meiryo UI", "メイリオ", sans-serif;
+    border-radius: 30px;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+a.button:hover {
+    background-color: #555;
+    text-decoration: none;
+}
+
+a.button:active {
+    background-color: #000;
+}
+
+@media screen and (max-width: 980px) {
+    #images {
+        /*display: none;*/
+        left: 100%;
+        width: 0;
+        max-width: 0;
+        visibility: hidden;
+    }
+
+    #wrapper {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    #contents-wrapper {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        float: none;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+
+
+    #header-wrapper,
+    #global-header {
+        min-width: 100%;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    #contents {
+        width: calc(100% - 60px);
+    }
+}

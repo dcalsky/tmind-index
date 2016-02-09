@@ -82,7 +82,7 @@ UserAgent.prototype = {
     }
     return d;
   })(UserAgent.prototype)
-}
+};
 
 var UA = new UserAgent(navigator.userAgent.toLowerCase());
 
@@ -185,11 +185,7 @@ var ScrollProperties = new function() {
   this.sp = (function(n) {
     return UA.os === "win" ? n * 4 : n * 3;
   })(SPEED_DISTANCE);
-}
-
-
-
-
+};
 
 var ContentScroller = function(d) {
 
@@ -211,7 +207,7 @@ var ContentScroller = function(d) {
       y = dh - wh;
     }
     return y;
-  }
+  };
 
   this.stopped = true;
   this.yp = 0;
@@ -221,7 +217,7 @@ var ContentScroller = function(d) {
     _enterYp += (_this.yp - s) / _s;
     window.scrollTo(0,  parseInt(_enterYp));
     _this.id = requestAnimationFrame(_this.onEnterframe);
-  }
+  };
 
   return {
     reset: function() {
@@ -258,7 +254,7 @@ var ImageScroller = function(p, c, d) {
   var _wh = doc.documentElement.clientHeight || doc.body.clientHeight;
   var _this = this;
   var _parent = p;
-  var _children = c
+  var _children = c;
   var _dis = d[0];
   var _dlt = 0;
   var _s = ScrollProperties.sp;
@@ -316,8 +312,6 @@ var ImageScroller = function(p, c, d) {
             _enterYp -= ch;
             _parent.style.top = _enterYp + "px";
             n = _this.yp;
-
-            // 鐩鍊ゃ亴娆°伄瀛愯绱犮伄楂樸仌銈掕秴銇堛仧銈�
             if (n > cld.offsetHeight) {
               n = cld.offsetHeight;
               break;
@@ -363,215 +357,6 @@ var ImageScroller = function(p, c, d) {
   }
 }
 
-
-
-var ReplaceSideImages = function(target, parent) {
-
-  var _t = this;
-  var _target = target;
-  var _parent = parent;
-  var _transitionEnd = getTransitionEndType();
-
-  this.nextImageType = "default";
-  this.prevImageType = "default";
-  this.isquit = false;
-
-  return {
-    init: (function() {
-      var ul = _target.getElementsByTagName("ul")[0];
-      _t.nextImageType = ul.getAttribute("data-type") ? "unique" : "default";
-    })(),
-    build: function(responseText, callback) {
-
-      var t = this;
-      var doc = responseText.replaceAll(/[\n\r]/," ").replaceAll(/\t/,"");
-      var body = doc.replace(/<!DOCTYPE(.+)((<body+?>)|(<body.+?>))/, "").replace(/<\/body><\/html>/, "");
-      var images = doc.match(/<div id="images">.+?<\/div>/);
-      var loadedImageElements = new Array();
-      var count = 0;
-      var query = "";
-
-      _t.isquit = false;
-
-      if (document.getElementById("catch")) {
-        document.getElementById("images").removeChild(document.getElementById("catch"));
-      }
-
-      var div = document.createElement("div");
-      document.getElementsByTagName("body")[0].appendChild(div);
-      div.innerHTML = images;
-      div.id = "dummyContainer";
-
-      var imgTags = new Array();
-      var ul = div.getElementsByTagName("ul")[0];
-      var img = ul.getElementsByTagName("img");
-      var p = div.getElementsByTagName("p")[0];
-      var len = img.length;
-      var titleElm = new Object();
-
-      if (navigator.userAgent.toLowerCase().indexOf("msie") > 0 === "msie") {
-        query = "?date=" + new Date().getTime();
-      }
-
-      for (var n = 0; n < len; n++) {
-        imgTags[n] = ul.getElementsByTagName("img")[n].getAttribute("src") + query;
-      }
-
-      if (p && p.getAttribute("id") === "catch") {
-        titleElm.src = p.getElementsByTagName("img")[0].getAttribute("src");
-        titleElm.alt = p.getElementsByTagName("img")[0].getAttribute("alt");
-      }
-
-      document.getElementsByTagName("body")[0].removeChild(div);
-      div = null;
-
-      _t.prevImageType = _t.nextImageType;
-      _t.nextImageType = ul.getAttribute("data-type") ? "unique" : "default";
-
-      if (_t.nextImageType === "unique" || _t.nextImageType !== _t.prevImageType) {
-
-        _parent.addEventListener(_transitionEnd, function(e) {
-          if (_t.isquit) {
-            imageScroller.stop();
-            t.show();
-            this.removeEventListener(_transitionEnd, arguments.callee, false);
-            return false;
-          }
-
-          if (e.propertyName === "opacity" && parseInt($(this).css("opacity")) === 0) {
-            if (imageScroller) {
-              imageScroller.stop();
-            }
-
-            for (var i = 0; i < len; i++) {
-              var imgobj = new Image();
-              imgobj.src = imgTags[i] + query;
-              imgobj.name = i;
-              imgobj.addEventListener("load", function(e) {
-                addImage(this.name, len, this.width, this.height);
-                this.removeEventListener("load", arguments.callee);
-              }, false);
-            }
-            this.removeEventListener(_transitionEnd, arguments.callee, false);
-          }
-
-        }, false);
-
-        t.hide();
-      }
-
-      function addImage(num, len) {
-
-        if (_t.isquit) {
-          t.show();
-          return false;
-        }
-
-        var img = document.createElement("img");
-        img.src = imgTags[num];
-        img.setAttribute("class", "loading");
-        img.setAttribute("id", "img" + num);
-        loadedImageElements[num] = img;
-        count++;
-
-        if (count >= len) {
-          $("#images li").remove();
-
-          for (var i = 0; i < len; i++) {
-            var li = document.createElement("li");
-            li.appendChild(loadedImageElements[i]);
-            _parent.appendChild(li);
-          }
-
-          if (imageScroller) {
-            imageScroller.resize();
-            imageScroller.start();
-          }
-
-          t.show();
-
-          if (typeof titleElm.src != "undefined") {
-            if (document.getElementById("catch")) {
-              $("#catch").remove();
-            }
-            addTitle();
-          } else {
-            if (callback) callback();
-          }
-        }
-      }
-
-      function addTitle() {
-        var titleimg = new Image();
-        titleimg.src = titleElm.src + query;
-        titleimg.onload = function() {
-          var images = document.getElementById("images");
-          images.insertBefore((function(obj) {
-            var p = document.createElement("p");
-            var img = document.createElement("img");
-            img.src = obj.src + query;
-            img.alt = obj.alt || "";
-            p.id = "catch";
-            p.appendChild(img);
-            return p;
-          })(titleElm), images.getElementsByTagName("ul")[0]);
-          $("#catch").css("opacity", 0).delay(500).animate({opacity: 1}, 2000);
-          if (callback) callback();
-        }
-      }
-    },
-    getNextImagesType: function() {
-      return _t.nextImageType;
-    },
-    getPrevImagesType: function() {
-      return _t.prevImageType;
-    },
-    show: function() {
-      _parent.style.opacity = 1;
-    },
-    hide: function() {
-      imageIndicator.show();
-      _parent.style.opacity = 0;
-    },
-    cancel: function() {
-      $("#images li").remove();
-      _parent.style.opacity = 1;
-      _t.isquit = true;
-      _t.nextImageType = "unique";
-    }
-  }
-}
-
-
-
-var currentPageHighlight = function(element, dirLevel) {
-
-  var len = 0;
-  var dirLv = 0;
-  var URL = document.URL;
-  var dirName = URL.match(".+/(.+?)$")[1];
-  var currentURL = URL.substring(0, URL.length - dirName.length);
-  var dirAry = URL.split("/");
-  dirAry.shift();
-  dirAry.shift();
-  len = dirAry.length;
-
-  if (typeof dirLevel === "undefined" || dirLevel === null) {
-    dirLv = 0;
-  } else {
-    dirLv = dirLevel;
-    len = dirLv;
-  }
-
-  $(element).find("a").parent().removeClass("current");
-
-  for (var j = dirLv; j <= len; j++) {
-    $(element).find("a[href*='/" + dirAry[j] + "/']").parent().addClass("current");
-  }
-}
-
-
-
 var getTransitionEndType = function() {
 
   var e = document.createElement("div"); // Dummy element
@@ -587,71 +372,14 @@ var getTransitionEndType = function() {
   }
 }
 
-
-
-var ElementUntil = function(name, callback) {
-
-  var _t = this;
-
-  this.callback = callback;
-  this.name = name;
-
-  this.found = function() {
-    if (_t.callback) _t.callback(_t.name);
-  }
-  this.search = function() {
-    if (document.getElementById(_t.name)) {
-      _t.found();
-    } else {
-      setTimeout(_t.search, 1);
-    }
-  }
-  this.search();
-};
-
 var windowHasLoaded = false;
 
 (function () {
 
   $(window).load(function() {
     windowHasLoaded = true;
-    if (initIndicator && document.getElementById("indR")) {
-      showContent();
-    }
   });
 
-  var indSrcExt = (UA.browser === "msie" && UA.version < 10) ? ".gif" : ".png";
-
-  if (UA.browser === "msie" && UA.version < 9) {
-    console.log("You are using an outdated browser.");
-
-  } else {
-    var indicatorImage = new Image();
-    var eUntil1 = new ElementUntil("wrapper", hideContent);
-    var eUntil2 = new ElementUntil("header-wrapper", hideContent);
-    indicatorImage.src = "/common/images/indicator_k" + indSrcExt;
-    initIndicator = new Indicator("indR", indicatorImage.src, "body");
-  }
-
-  function hideContent(name) {
-    document.getElementById(name).style.visibility = "hidden";
-    document.getElementById(name).style.opacity = 0;
-    if (!document.getElementById("indR")) {
-      initIndicator.init();
-      initIndicator.show();
-    }
-    if (windowHasLoaded) {
-      showContent();
-    }
-  }
-
-  function showContent() {
-    initIndicator.hide();
-    $("#wrapper, #header-wrapper").css("visibility", "visible").animate({opacity: 1}, 500);
-  }
-
-
-  // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 
   window.requestAnimationFrame = (function() {
     return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
@@ -675,22 +403,3 @@ var windowHasLoaded = false;
   }
 
 })();
-
-
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-44503239-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript';
-  ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
-      'http://www') + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(ga, s);
-})();
-//*/
-
-
-console.log("Welcome to Ryokan Sanga :)");
