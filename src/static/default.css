@@ -5,6 +5,7 @@ body,
 #contents-wrapper,
 #wrapper {
     height: 100%;
+    -webkit-user-select: none;
 }
 
 #pjax-container {
