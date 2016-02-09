@@ -30,7 +30,7 @@ module.exports = {
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.js$/, loader: 'babel' },
       { test: /\.(png|jpg|woff)/, loader: 'url-loader' },
-      { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
+      //{ test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
     ]
   },
   stylus: {

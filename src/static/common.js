@@ -8,12 +8,9 @@ var SCROLLWHEEL_DISTANCE = 100;
 var KEYPRESS_DISTANCE = 100;
 var SPEED_DISTANCE = 2;
 
-
-// @ v 1.2 @ 2013-09-27
-
 var UserAgent = function(userAgent) {
   ua: userAgent
-}
+};
 
 UserAgent.prototype.ua = navigator.userAgent.toLowerCase();
 
@@ -98,7 +95,7 @@ var Indicator = function(id, src, parent, target) {
   this.ap = parent;
   this.target = target ? target : parent;
   this.src = src;
-  this.indctr;
+  this.indctr = null;
 
   return {
     init: function() {
@@ -142,7 +139,7 @@ var Indicator = function(id, src, parent, target) {
       _t.indctr.style.opacity = 0;
     }
   }
-}
+};
 
 
 
@@ -190,8 +187,6 @@ var ScrollProperties = new function() {
 var ContentScroller = function(d) {
 
   var _this = this;
-  var _dis = d[0];
-  var _dlt = 0;
   var _s = ScrollProperties.sp;
   var _enterYp = 0;
 
@@ -243,7 +238,7 @@ var ContentScroller = function(d) {
       return _this.yp;
     }
   }
-}
+};
 
 
 
@@ -255,8 +250,6 @@ var ImageScroller = function(p, c, d) {
   var _this = this;
   var _parent = p;
   var _children = c;
-  var _dis = d[0];
-  var _dlt = 0;
   var _s = ScrollProperties.sp;
   var _enterYp = 0;
 
@@ -269,7 +262,7 @@ var ImageScroller = function(p, c, d) {
     _enterYp += (_this.yp - parseInt($(_parent).css("top"))) / _s;
     _parent.style.top = parseInt(_enterYp) + "px";
     _this.id = requestAnimationFrame(_this.onEnterframe);
-  }
+  };
 
   return {
     init : function() {
@@ -355,7 +348,7 @@ var ImageScroller = function(p, c, d) {
       return _this._yp;
     }
   }
-}
+};
 
 var getTransitionEndType = function() {
 
@@ -363,14 +356,14 @@ var getTransitionEndType = function() {
   var t = {
     "WebkitTransition" : "webkitTransitionEnd",
     "transition" : "transitionend"
-  }
+  };
   for (var i in t) {
     if (typeof e.style[i] !== "undefined") {
       e = null;
       return t[i];
     }
   }
-}
+};
 
 var windowHasLoaded = false;
 
