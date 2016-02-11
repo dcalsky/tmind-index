@@ -1,5 +1,6 @@
 import '../static/init.css';
 var imageScroller = null;
+
 $(document).ready(function() {
   var wd = ScrollProperties.wd;
   var kd = ScrollProperties.kd;

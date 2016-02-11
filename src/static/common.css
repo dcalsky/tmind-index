@@ -431,7 +431,6 @@ a.button {
     letter-spacing: 0.1em;
     background: none;
     background-color: #999;
-    font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, "Hiragino Mincho ProN", "ヒラギノ明朝 ProN W3", "Meiryo UI", "メイリオ", sans-serif;
     border-radius: 30px;
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
